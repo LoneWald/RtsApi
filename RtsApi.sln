@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsApi", "RtsApi\RtsApi.csproj", "{64AA574E-7D96-4F66-B4DA-802C16F0F678}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RtsApi", "RtsApi\RtsApi.csproj", "{64AA574E-7D96-4F66-B4DA-802C16F0F678}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{E260C1FC-7C26-4CCF-8AC9-38653936F2C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{B3AA605A-9515-4C75-BF3A-BE8A2E42D0D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{64AA574E-7D96-4F66-B4DA-802C16F0F678}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64AA574E-7D96-4F66-B4DA-802C16F0F678}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64AA574E-7D96-4F66-B4DA-802C16F0F678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E260C1FC-7C26-4CCF-8AC9-38653936F2C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E260C1FC-7C26-4CCF-8AC9-38653936F2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E260C1FC-7C26-4CCF-8AC9-38653936F2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E260C1FC-7C26-4CCF-8AC9-38653936F2C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3AA605A-9515-4C75-BF3A-BE8A2E42D0D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3AA605A-9515-4C75-BF3A-BE8A2E42D0D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3AA605A-9515-4C75-BF3A-BE8A2E42D0D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3AA605A-9515-4C75-BF3A-BE8A2E42D0D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
