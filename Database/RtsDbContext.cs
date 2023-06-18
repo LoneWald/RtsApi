@@ -7,6 +7,9 @@ namespace Database;
 public partial class RtsDbContext : DbContext
 {
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<Game> Games { get; set; }
+    public DbSet<Save> Saves { get; set; }
+    
     public RtsDbContext()
     {
     }
