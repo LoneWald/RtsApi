@@ -2,6 +2,9 @@ using Database;
 using RtsApi.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using RtsApi;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDatabaseModule(builder.Configuration);
 builder.Services.ConfigureAuthorization(builder.Configuration);
 builder.Services.ConfigureSwagger();
+builder.Services.AddSingleton<IActionResultExecutor<ObjectResult>, ResponseEnvelopeResultExecutor>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,6 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

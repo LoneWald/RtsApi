@@ -29,13 +29,15 @@ public class GameController : ControllerBase
     public async Task<IEnumerable<Game>> GetAll()
     {
         var acc = await GetAccount();
+        Log($"Пользователь {acc.Id} запросил даннные обо всех играх");
         return await _db.Games.Include(e => e.Saves).Where(e => e.Account.Email == acc.Email).ToListAsync();
     }
 
     [HttpGet("Get/{id}")]
-    public async Task<Game> GetAll(int id)
+    public async Task<Game> Get(int id)
     {
         var acc = await GetAccount();
+        Log($"Пользователь {acc.Id} запросил даннные об игре с id = {id}");
         var game = await _db.Games.Include(e => e.Saves).FirstOrDefaultAsync(e => e.Account.Email == acc.Email && e.Id == id);
         if (game == null) throw new Exception("Игра не найдена");
         return game;
@@ -80,6 +82,7 @@ public class GameController : ControllerBase
         game.Saves.Add(initSave);
         _db.Games.Add(game);
         await _db.SaveChangesAsync();
+        Log($"Пользователем {acc.Id} создана новая игра {game.Id}");
         return game;
     }
 
@@ -93,6 +96,7 @@ public class GameController : ControllerBase
         var save = new Save()
         {
             Date = DateTime.Now,
+            Name = saveInfo.Name,
             Level = saveInfo.Level,
             Money = saveInfo.Money,
             Order = game.Saves.Count,
@@ -103,6 +107,7 @@ public class GameController : ControllerBase
         game.Saves.Add(save);
         game.State = string.IsNullOrEmpty(saveInfo.State) ? game.State : saveInfo.State;
         await _db.SaveChangesAsync();
+        Log($"Пользователь {(await GetAccount()).Id} сохранил игру {game.Id}");
         return save;
     }
     [Authorize(Roles = "ADMIN, STUDENT")]
@@ -112,6 +117,7 @@ public class GameController : ControllerBase
     {
         var save = await _db.Saves.FirstOrDefaultAsync(e => e.Id == id);
         if (save == null) throw new Exception("Сохранение не найдено");
+        Log($"Пользователь {(await GetAccount()).Id} загрузил сохранение {id}");
         return save;
     }
 
@@ -122,5 +128,15 @@ public class GameController : ControllerBase
         var acc = _db.Accounts.FirstOrDefault(e => e.Email == email);
         if (acc == null) throw new Exception("Аккааунт не найден");
         return acc;
+    }
+    async Task Log(string str)
+    {
+        var log = new Log()
+        {
+            Date = DateTime.Now,
+            Text = str
+        };
+        _db.Logs.Add(log);
+        await _db.SaveChangesAsync();
     }
 }

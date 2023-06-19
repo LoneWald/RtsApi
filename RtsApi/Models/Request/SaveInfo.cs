@@ -6,6 +6,7 @@ namespace RtsApi;
 public class SaveInfo : IValidatable
 {
     public int GameId{ get; set; }
+    public string Name{ get; set; }
     public double Level { get; set; }
     public double Money { get; set; }
     public double Bits { get; set; }

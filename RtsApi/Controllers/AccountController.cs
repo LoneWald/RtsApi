@@ -20,6 +20,9 @@ public class AccountController : ControllerBase
     [HttpGet("Get")]
     public async Task<IEnumerable<Account>> GetAll()
     {
+        var email = HttpContext.User.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Email)?.Value;
+        var user = _db.Accounts.FirstOrDefault(e => e.Email == email);
+        Log($"Пользователь {user.Id} запросил даннные обо всех аккаунтах");
         return await _db.Accounts.ToListAsync();
     }
 
@@ -27,6 +30,9 @@ public class AccountController : ControllerBase
     [HttpGet("Get/{id}")]
     public async Task<Account> Get(int id)
     {
+        var email = HttpContext.User.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Email)?.Value;
+        var user = _db.Accounts.FirstOrDefault(e => e.Email == email);
+        Log($"Пользователь {user.Id} запросил даннные об аккаунте с id  = {id}");
         var acc = await _db.Accounts.FirstOrDefaultAsync(e => e.Id == id);
         if (acc == null)
             throw new Exception("Аккаунт не найден");
@@ -52,6 +58,8 @@ public class AccountController : ControllerBase
         };
         await _db.Accounts.AddAsync(account);
         await _db.SaveChangesAsync();
+
+        Log($"Зарегесрирован новый аккаунт {account.Email}");
         return account;
     }
 
@@ -68,6 +76,18 @@ public class AccountController : ControllerBase
         if (string.IsNullOrEmpty(data.Password)) edit.Password = data.Password;
         if (data.IsActive is not null) edit.IsActive = data.IsActive.Value;
         await _db.SaveChangesAsync();
+        Log($"Данные акаунта {edit.Id} были изменены");
         return edit;
+    }
+
+    async Task Log(string str)
+    {
+        var log = new Log()
+        {
+            Date = DateTime.Now,
+            Text = str
+        };
+        _db.Logs.Add(log);
+        await _db.SaveChangesAsync();
     }
 }
