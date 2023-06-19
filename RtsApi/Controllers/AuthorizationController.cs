@@ -27,7 +27,7 @@ public class AuthorizationController : ControllerBase
         var acc = _db.Accounts.FirstOrDefault(e => e.Email == login.Email && e.Password == login.Password);
         if (acc is null)
         {
-            Log($"Выполнена попытка входа для пользователя {acc.Id}");
+            Log($"Выполнена попытка входа для пользователя {login.Email}");
             throw new Exception("Неврные логин или пароль");
         }
         var claims = new List<Claim> {
